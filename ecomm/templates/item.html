@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .item div{
+        width: 30%;
+        height: 500px;
+        margin-right: 10px;
+        margin-top:20px;
+        }
+    .item{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+    #submit{
+        width:250px;
+        height: 40px;
+    }
+</style>
+<body>
+    <nav id="header" class="navbar navbar-expand-lg navbar bg" style= "background-color: rgb(196, 163, 196);height: 90px;color:white;">
+        <div class="container-fluid">
+          {% load static %}
+          <h1 style="font-family: 'Satisfy', cursive;"> wizilla</h1>
+          <!-- <img src="{% static 'Free_Sample_By_Wix (2).jpeg' %}" style="display: inline-block; height: 90px; width: auto;" alt="My image"> -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" id='a1'aria-current="page" href="/home/products/" style="color: white;text-decoration: none;">Shop</a> 
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" id='a1'aria-current="page" href="/home/" style="color: white;text-decoration: none;">Home</a> 
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="item" >
+        {% for i in item %}
+          <div style="float: left;border:none">
+            <img src={{i.image}} style="display: inline-block;height:500px;width: 400px;" alt="not found">
+        </div>
+          <div style="float: right;border:1px solid rgb(196, 163, 196);border-radius: 1%; padding-left: 30px;padding-right: 30px; overflow: scroll;overflow-x: hidden;">
+            <h2 style="margin-top: 10px;" >{{i.brand}}</h2>
+            <p style="font-weight:100;font-size: 20px;color: rgb(168, 163, 163);"> {{i.name}}</p>
+
+            <h5 style=" display: inline-block;">Rs.{{i.mrp}}</h5> <h6 style="display: inline-block;"> <s> Rs.{{i.csp}}</s></h6><h5 style="display: inline-block; margin-left: 20px;color:rgb(196, 163, 196) ;">({{i.discount}}% OFF)</h5>
+            <hr >
+            <p style="color: rgb(40, 128, 40);">include all taxes</p>
+            {% if not i.in_cart %}
+                <!-- <button  style="border: none;outline: none;background-color: rgb(196, 163, 196);color:white;padding: 8px 8px;" class="btn btn-outline-secondary add-btn" id="additem" onclick="additem('{{i.name}}')">Add to Cart</button> -->
+                <button id="submit" style="display: inline-block; border: none;outline: none;background-color: rgb(196, 163, 196);color:white;padding: 5px 5px;" class="btn btn-outline-secondary add-btn" ><a href="/home/item_cart/{{i.id}}/" id="btn" style="color: white;text-decoration: none;">Add to Cart</a></button>
+                {% else %}
+                <button id="submit" style="border: 1px solid rgb(196, 163, 196);outline: none;background-color:rgb(196, 163, 196);padding: 5px 5px;" class="btn btn-outline-secondary add-btn" ><a href="/home/order/" id="btn" style="color: white;text-decoration: none;">Go to Cart </a></button>
+                {% endif %}
+           <h5 style="margin-top: 20px;">Product Details:</h5>
+           <small style="text-align: justify;">{{i.description}}</small>
+           <h5 style="margin-top: 20px;">Delivery Options:</h5>
+           {% load static %}
+           <p><img style="display: inline-block;margin-right: 10px; height: 30px;" src="{% static 'money.png' %}" alt=""> Pay on Delivery</p>
+           {% if i.in_warranty == 0 %}
+           <h5>Warranty : <p style="display: inline-block; color:rgb(168, 163, 163) ;">Not available</p></h5>
+           {%else%}
+           <h5 >Warranty: <p style="display: inline-block; color:rgb(168, 163, 163) ;">{{i.in_warranty}} months</p></h5>
+           {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+</body>
+</html>

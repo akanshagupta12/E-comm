@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    html, body {
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    color: #666;
+    /* background-color:rgb(226, 219, 220) ; */
+    }
+  </style>
+<body>
+    <nav id="header" class="navbar navbar-expand-lg navbar bg" style= "background-color: rgb(196, 163, 196);height: 90px;color:white;">
+        <div class="container-fluid">
+          {% load static %}
+          <h1 style="font-family: 'Satisfy', cursive;color: white;margin-bottom: -10px;"> wizilla</h1>
+          <!-- <img src="{% static 'Free_Sample_By_Wix (2).jpeg' %}" style="display: inline-block; height: 90px; width: auto;" alt="My image"> -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" id='a1'aria-current="page" href="/home/products/" style="color: white;text-decoration: none;">Shop</a> 
+              </li>
+            <li class="nav-item">
+              <a class="nav-link active" id='a1'aria-current="page" href="/home/" style="color: white;text-decoration: none;">Home</a> 
+            </li>
+        </ul>
+        </div>
+      </nav>
+      <br><br><br>
+      <div class="row">
+        <div class="column">
+          <table class="table" style="width: 105%; margin-left: 350px;margin-top: 20px;border: 1px solid rgb(180, 177, 177)  ;" id="tdata">
+            <thead>
+              <tr id="trow">
+                <th scope="col">Item</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Sub-Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in data %}
+              <tr style="height: 50px;border-bottom: 1px solid rgb(218, 215, 215) ;">
+                <!-- <td><img style="display: inline-block;height: 30px;color: black ;" src="https://img.icons8.com/carbon-copy/100/ffffff/filled-trash.png"/></td> -->
+                <td style="width: 80px;"><img src={{i.image}} style="display: inline-block;height: 60px;width: 80px;padding: 0px;" alt=""></td>
+                <td>{{i.name}}</td>
+                <td>Rs.{{i.csp}}</td>
+                <td style="text-align: center;" id="quantity-button">
+                  <button id='btn' style="border: none; outline: none; cursor:inherit; border-radius: 0px;  outline: none;color:black;height: 30px;margin-top: 10px;" class="btn btn-outline-secondary add-btn" id="additem">{{i.quantity}}</button>    
+                </td>
+                <td>Rs.{{i.subtotal}}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                  <td colspan="2" style="border-top: none;"><h4>Your cart total is Rs.{{cart_total}}/- only.</h4> </td> 
+                    {% load static %}
+                    </td>
+                </tr>
+              <tr>
+                <td style="border-top: none;"><form action="/home/payment/success/" method="POST">
+                    {% csrf_token %}
+                    <script
+                        src="https://checkout.razorpay.com/v1/checkout.js"
+                        data-key={{razor_id}}
+                        data-amount="{{total}}"
+                        data-currency="INR"
+                        data-order_id="{{payment.id}}"
+                        data-buttontext="Pay with Razorpay"
+                        data-name="{{name}}"
+                        data-description="{{name}}"
+                        data-image="https://example.com/your_logo.jpg"
+                        data-prefill.name="PC"
+                        data-prefill.email="{{email}}"
+                        data-theme.color="#F37254"
+                    ></script>
+                    <input type="hidden" custom="Hidden Element" name="hidden">
+                    </form></td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+          
+            </tbody>
+          </table>
+        </div>
+
+</body>
+</html>
