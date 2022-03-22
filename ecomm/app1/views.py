@@ -87,7 +87,7 @@ def delete_item_from_cart(request ,  *args , **kwargs):
 #         Cart.objects.create(name=item[0]['name'] , mrp = item[0]['mrp'] , csp = item[0]['csp'] , image = item[0]['image'])
 #     # print(item)
 #     return HttpResponse("success")
-
+print("12")
 def cart_page(request):
     result= Cart.objects.all()
     count_item= Cart.objects.all().count()
