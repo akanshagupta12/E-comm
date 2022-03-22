@@ -88,8 +88,6 @@ def delete_item_from_cart(request ,  *args , **kwargs):
 #     # print(item)
 #     return HttpResponse("success")
 
-
-print("uiqyqi")
 def cart_page(request):
     result= Cart.objects.all()
     count_item= Cart.objects.all().count()
